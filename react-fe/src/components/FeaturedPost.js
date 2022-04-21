@@ -1,5 +1,5 @@
 import React from "react";
-import "../blog.css";
+import "../styles/blog.css";
 
 const FeaturedPost = ({image, title, updatedAt, content, blogLink, width, height}) => {
   return (
@@ -16,7 +16,7 @@ const FeaturedPost = ({image, title, updatedAt, content, blogLink, width, height
         <p>{updatedAt}</p>
         <h1>{title}</h1>
         <p>{content}</p>
-        <a href={blogLink}>Read More</a>
+        <a href="#">Read More</a>
       </div>
     </div>
   );
