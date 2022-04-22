@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/blog.css";
 
-const NavBar = () => { 
+const NavBar = ({onPress}) => { 
   return (
     <div className="blog-post-navbar">
       <div className="blog-post-brand">
@@ -17,7 +17,7 @@ const NavBar = () => {
       <ul>
         <li><a href="#">Join our team</a></li>
         <li><a href="#">Contact us</a></li>
-        <li><a href="#">Create New Post</a></li>
+        <li><button onClick={()=>onPress()}>Create New Post</button></li>
       </ul>
     </div>
   );

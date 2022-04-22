@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/blog.css";
 
-const Post = ({post}) => {
+const Post = ({post, onEdit}) => {
   return (
     <div className="blog-post">
       <div className="blog-post-image">
@@ -13,6 +13,11 @@ const Post = ({post}) => {
         <p>{post.body}</p>
         <a href="#">Read More</a>
       </div>
+      <button
+        onClick={()=>onEdit()}
+      >
+        Edit
+      </button>
     </div>
   );
 }
