@@ -1,26 +1,35 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import "../styles/blog.css";
 
-const NavBar = ({onPress}) => { 
+const NavBar = ({ onPress }) => {
   return (
     <div className="blog-post-navbar">
       <div className="blog-post-brand">
-        <a href="https://itjuana.com/">
+        <Link to="/">
           <img
             src="https://itjuana.com/wp-content/uploads/ITJ_tm-logo.png"
             alt="itjuana logo"
             width={80}
             height={80}
           />
-        </a>
+        </Link>
       </div>
       <ul>
-        <li><a href="#">Join our team</a></li>
-        <li><a href="#">Contact us</a></li>
-        <li><button onClick={()=>onPress()}>Create New Post</button></li>
+        <li>
+          <NavLink to="join-our-team">Join our team</NavLink>
+        </li>
+        <li>
+          <NavLink to="contact-us">Contact us</NavLink>
+        </li>
+        <li>
+          <Link to="create-new-post">
+            <button>Create New Post</button>
+          </Link>
+        </li>
       </ul>
     </div>
   );
-}
+};
 
-export default NavBar
+export default NavBar;
