@@ -1,54 +1,67 @@
-const data = require('../data/data')
+const postService = require("../services/post-service");
 
-const getPosts = (req, res) => {
-    res.status(200).json({
-        msj: "The post was listed",
-        data: data,
-        statusCode: 200
-    })
+const getPosts = async (req, res, next) => {
+
+    try {
+        const posts = await postService.getPosts();
+        res.setHeader("Total", posts.length);
+        res.json(posts);
+    } catch(error) {
+        next(error);
+    }
+    
 }
 
-const getPost = (req, res) => {
+const getPost = async (req, res, next) => {
     const id = req.params.id;
-    res.status(200).json({
-        msj: "The post was finded",
-        data: data[id],
-        statusCode: 200
-    })
+    try {
+        const post = await postService.getPost(id);
+        console.log(post);
+        if (!post) {
+            return res.status(404).json({message: "Post not found"})
+        }
+        res.json(post);
+    } catch(error) {
+        next(error);
+    }
 }
 
-const createPost = (req, res) => {
-    const newPost = req.body
-    data.push(newPost)
-    res.status(201).json({
-        msj: "The post was created sucessfully",
-        data: newPost,
-        statusCode: 1
-    })
+const createPost = async (req, res) => {
+    const newPost = req.body;
+
+    try {
+        const savedPost = await postService.createPost(newPost);
+        res.status(201).json(savedPost);
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Error."})
+    }
 }
 
-const updatePost = (req, res) => {
+const updatePost = async (req, res, next) => {
     const id = req.params.id;
-    const updatedPost = req.body;
+    const postToUpdate = req.body;
 
-    data[id].author = updatedPost.author
-    data[id].body = updatedPost.body
-    data[id].title = updatedPost.title
+    try {
+        const updatedPost = await postService.updatePost(id, postToUpdate);
+        if(!updatedPost) {
+            return res.status(404).json({message: "Post does not exist."})
+        }
+        res.json(updatedPost);
 
-    res.status(200).json({
-        data: updatedPost,
-        msj: "The post was updated successfully",
-        statusCode: 200
-    })
+    } catch(error) {
+        next(error);
+    }
 }
 
-const deletePost = (req, res) => {
+const deletePost = async (req, res, next) => {
     const id = req.params.id;
-    data.splice(id, 1)
-    res.status(200).json({
-        msj: "The post was deleted sucessfully",
-        statusCode: 200
-    })
+   try {
+       await postService.deletePost(id);
+       res.status(204).send();
+   } catch(error) {
+       next(error)
+   }
 }
 
 module.exports = {
