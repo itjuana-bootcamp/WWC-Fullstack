@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/forms.css";
+import { getPostById } from "../api/apiPost";
 
-const CreatePost = ({ onSave, postToUpdate }) => {
+const CreatePost = ({ onSave, postId }) => {
   const newPost = {
     title: "",
     body: "",
     imageUrl: "",
+    author: "",
     updatedAt: new Date().toISOString(),
   };
 
-  const [newPostState, setNewPostState] = useState(postToUpdate || newPost);
+  //const [newPostState, setNewPostState] = useState(postToUpdate || newPost);
+  const [newPostState, setNewPostState] = useState(newPost);
+
+  const fetchingPostById = async () => {
+    const res = await getPostById(postId);
+    setNewPostState(res);
+  };
+
+  useEffect(() => {
+    if (postId) {
+      fetchingPostById();
+    } else {
+      setNewPostState(newPost);
+      //console.log("creating new post");
+    }
+  }, []);
 
   const handleOnChange = (event) => {
     const name = event.target.name;
@@ -38,6 +55,16 @@ const CreatePost = ({ onSave, postToUpdate }) => {
             name="body"
             placeholder="Add a body to the post"
             value={newPostState.body}
+            onChange={handleOnChange}
+          />
+        </div>
+        <div className="input-field">
+          <label>Author</label>
+          <textarea
+            type="text"
+            name="author"
+            placeholder="Add a author to the post"
+            value={newPostState.author}
             onChange={handleOnChange}
           />
         </div>

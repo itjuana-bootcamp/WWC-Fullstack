@@ -2,7 +2,7 @@ import React from "react";
 import FeaturedPost from "../components/FeaturedPost";
 import ListPost from "../components/ListPost";
 
-export const HomePage = ({ posts, onEdit }) => {
+export const HomePage = ({ posts, onEdit, onDelete }) => {
   return (
     <>
       <FeaturedPost
@@ -16,7 +16,7 @@ export const HomePage = ({ posts, onEdit }) => {
         image={"https://www.w3schools.com/tags/img_girl.jpg"}
       />
 
-      <ListPost posts={posts} onEdit={onEdit} />
+      <ListPost posts={posts} onEdit={onEdit} onDelete={onDelete} />
     </>
   );
 };

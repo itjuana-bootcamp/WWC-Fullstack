@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getPostById } from "../api/apiPost";
 
-export const DetailPostPage = ({ findPostById }) => {
+export const DetailPostPage = () => {
   const params = useParams();
   const { postId } = params;
-  const post = findPostById(postId);
+  const [post, setPost] = useState({});
+
+  const fetchPost = async () => {
+    const res = await getPostById(postId);
+    setPost(res);
+  };
+  useEffect(() => {
+    fetchPost();
+  }, []);
+  //const post = findPostById(postId);
   return (
     <div className="blog-post">
       <div className="blog-post-image">

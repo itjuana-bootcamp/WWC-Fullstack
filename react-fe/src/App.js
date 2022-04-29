@@ -4,7 +4,7 @@ import FeaturedPost from "./components/FeaturedPost";
 import ListPost from "./components/ListPost";
 import posts from "./resources/posts";
 //import CreatePost from "./components/CreatePost";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { JoinOurTeam } from "./pages/JoinOurTeam";
 import { ContactUs } from "./pages/ContactUs";
@@ -12,38 +12,59 @@ import { HomePage } from "./pages/HomePage";
 import CreatePost from "./pages/CreatePost";
 import { DetailPostPage } from "./pages/DetailPostPage";
 import { Error } from "./components/Error";
+import { getAllPost, createPost, updatePost, deletePost } from "./api/apiPost";
 
 function App() {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const [allPosts, setAllPosts] = useState(posts());
+  const [allPosts, setAllPosts] = useState([]);
   const [postId, setPostId] = useState();
+
+  const fetchPosts = async () => {
+    const res = await getAllPost();
+    console.log("***");
+    console.log(res);
+    setAllPosts(res);
+  };
+
+  useEffect(() => {
+    console.log("***");
+    fetchPosts();
+  }, []);
 
   const findPostById = (id) => {
     return allPosts[id];
   };
 
-  const handleOnSave = (post) => {
-    if (postId || postId === 0) {
-      const copyOfPosts = allPosts.map((item, index) =>
-        index === postId ? post : item
+  const handleOnSave = async (post) => {
+    console.log(post);
+    if (postId) {
+      const res = await updatePost(post._id, post);
+      //console.log(res);
+      const copyOfPosts = allPosts.map((item) =>
+        item._id === res._id ? post : item
       );
-      // const copyOfPosts = Array.from(allPosts);
-      // const newAllPosts = copyOfPosts.filter((post, index) => index !== postId); //[...copyOfPosts, post];
-
       setAllPosts(copyOfPosts);
-      setPostId();
+      // setPostId();
     } else {
+      const res = await createPost(post);
+      // console.log("my response", res);
       setAllPosts([...allPosts, post]);
     }
     navigate("/");
-    //navigate("/",{replace:true});
   };
 
   const handleOnEdit = (postId) => {
+    console.log(postId);
     // setIsVisible(true); //onPress()
     setPostId(postId);
     navigate("/create-new-post");
+  };
+  const onDelete = async (id) => {
+    const res = await deletePost(id);
+
+    const copyOfPosts = allPosts.filter((item) => item._id !== id);
+    setAllPosts(copyOfPosts);
   };
 
   return (
@@ -52,7 +73,13 @@ function App() {
       <Routes>
         <Route
           index
-          element={<HomePage posts={allPosts} onEdit={handleOnEdit} />}
+          element={
+            <HomePage
+              posts={allPosts}
+              onEdit={handleOnEdit}
+              onDelete={onDelete}
+            />
+          }
         />
         <Route path="join-our-team" element={<JoinOurTeam />} />
         <Route path="contact-us" element={<ContactUs />} />
@@ -60,7 +87,8 @@ function App() {
         <Route
           path="create-new-post"
           element={
-            <CreatePost onSave={handleOnSave} postToUpdate={allPosts[postId]} />
+            //  <CreatePost onSave={handleOnSave} postToUpdate={allPosts[postId]} />
+            <CreatePost onSave={handleOnSave} postId={postId} />
           }
         />
         <Route
