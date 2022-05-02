@@ -24,7 +24,7 @@ const NavBar = ({ onPress }) => {
         </li>
         <li>
           <Link to="create-new-post">
-            <button>Create New Post</button>
+            Create New Post
           </Link>
         </li>
       </ul>

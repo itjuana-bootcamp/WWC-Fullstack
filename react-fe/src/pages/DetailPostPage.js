@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Post from '../components/Post';
 import { getPostById } from "../api/apiPost";
 
-export const DetailPostPage = () => {
+export const DetailPostPage = ({onDelete}) => {
   const params = useParams();
   const { postId } = params;
   const [post, setPost] = useState({});
@@ -16,20 +17,11 @@ export const DetailPostPage = () => {
   }, []);
   
   return (
-    <div className="blog-post">
-      <div className="blog-post-image">
-        <img
-          src={post.imageUrl}
-          alt="Blog header image"
-          width={250}
-          height={250}
-        />
-      </div>
-      <div className="blog-post-details">
-        <p>{post.updatedAt}</p>
-        <h1>{post.title}</h1>
-        <p>{post.body}</p>
-      </div>
-    </div>
+    <Post
+        id={ post._id }
+        post={ post }
+        isDetails={ true }
+        onDelete={ onDelete }
+      />
   );
 };

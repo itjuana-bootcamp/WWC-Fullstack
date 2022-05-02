@@ -10,8 +10,6 @@ const ListPost = ({ posts, onEdit, onDelete }) => {
             id={post._id}
             key={post._id}
             post={post}
-            onEdit={() => onEdit(post._id)}
-            onDelete={() => onDelete(post._id)}
           />
         );
       })}
