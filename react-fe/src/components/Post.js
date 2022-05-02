@@ -25,12 +25,12 @@ const Post = ({ post, onEdit, onDelete, id, isDetails }) => {
         isDetails &&
         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <Link
-            className="blog-post-edit"
+            className="blog-post-btn"
             to={`/create-new-post/${id}`}>
             Edit
           </Link>
           <button
-            className="blog-post-delete"
+            className="blog-post-btn"
             onClick={() => onDelete(id)}
           >
             X

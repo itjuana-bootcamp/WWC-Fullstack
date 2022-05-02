@@ -44,6 +44,7 @@ export const updatePost = async (id, post) => {
 };
 
 export const deletePost = async (id) => {
+  console.log(id)
   try {
     const res = await fetch(URL_SERVER + id, {
       method: "DELETE",

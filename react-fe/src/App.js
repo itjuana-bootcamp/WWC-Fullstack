@@ -47,6 +47,7 @@ function App() {
     const res = await deletePost(id);
     const copyOfPosts = allPosts.filter((item) => item._id !== id);
     setAllPosts(copyOfPosts);
+    navigate("/", {replace: true});
   };
 
   return (
