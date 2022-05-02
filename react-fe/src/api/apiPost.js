@@ -1,4 +1,4 @@
-const URL_SERVER = "http://localhost:5000/post/";
+const URL_SERVER = "http://localhost:8000/post/";
 
 export const getAllPost = async () => {
   try {
@@ -48,7 +48,6 @@ export const deletePost = async (id) => {
     const res = await fetch(URL_SERVER + id, {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
-      //body: JSON.stringify(post),
     });
     return await res.json();
   } catch (error) {

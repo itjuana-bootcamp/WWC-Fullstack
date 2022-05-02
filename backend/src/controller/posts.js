@@ -1,7 +1,6 @@
 const postService = require("../services/post-service");
 
 const getPosts = async (req, res, next) => {
-  console.log("getting all pòst");
   try {
     const posts = await postService.getPosts();
     res.setHeader("Total", posts.length);
@@ -15,7 +14,6 @@ const getPost = async (req, res, next) => {
   const id = req.params.id;
   try {
     const post = await postService.getPost(id);
-    console.log(post);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }

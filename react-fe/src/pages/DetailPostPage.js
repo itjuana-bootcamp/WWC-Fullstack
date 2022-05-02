@@ -14,7 +14,7 @@ export const DetailPostPage = () => {
   useEffect(() => {
     fetchPost();
   }, []);
-  //const post = findPostById(postId);
+  
   return (
     <div className="blog-post">
       <div className="blog-post-image">
