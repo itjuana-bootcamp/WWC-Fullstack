@@ -18,5 +18,5 @@ The bootcamp included the following sessions:
   8. CI/CD by [@ddiannae](https://github.com/ddiannae)
  
   
-  Session recordings can be found in [micoach](https://app.micoach.io/)
+  Session recordings can be found in [micoach](https://micoach.itj.com/)
   
